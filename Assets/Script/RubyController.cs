@@ -1,18 +1,35 @@
-﻿using System.Collections;
+﻿//人物的控制文件
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.UI;
 
-public class RubyController : MonoBehaviour
+public class RubyController : MonoBehaviourPun
 {
     // Start is called before the first frame update
+    public Text nameText;
     void Start()
     {
         
+    }
+    //当人物被创建时，添加人物的姓名在人物下方
+    private void Awake() {
+        if (photonView.IsMine) {
+            nameText.text = PhotonNetwork.NickName;
+        } else {
+            nameText.text = photonView.Owner.NickName;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //确保操作的是自己的人物而不是别的玩家的人物
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) {
+            return;
+        }
+        //获取玩家输入信息并实现移动的操作
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector2 position = transform.position;
