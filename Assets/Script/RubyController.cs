@@ -9,11 +9,6 @@ public class RubyController : MonoBehaviourPun
 {
     // Start is called before the first frame update
     public Text nameText;
-    void Start()
-    {
-        
-    }
-    //当人物被创建时，添加人物的姓名在人物下方
     private void Awake() {
         if (photonView.IsMine) {
             nameText.text = PhotonNetwork.NickName;
@@ -21,6 +16,11 @@ public class RubyController : MonoBehaviourPun
             nameText.text = photonView.Owner.NickName;
         }
     }
+    void Start()
+    {
+        
+    }
+    //当人物被创建时，添加人物的姓名在人物下方
 
     // Update is called once per frame
     void Update()
